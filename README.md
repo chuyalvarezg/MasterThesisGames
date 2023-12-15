@@ -1,1 +1,1 @@
-# SpaceShooter
+# Thesis Games
