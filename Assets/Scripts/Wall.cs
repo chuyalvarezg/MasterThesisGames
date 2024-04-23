@@ -160,4 +160,55 @@ public class Wall : MonoBehaviour
             }
         }
     }
+
+    private bool _CheckForOccupied(int xLoc,int zLoc)
+    {
+        if(waveManager.GetComponent<WaveManager>().tileMap[xLoc, zLoc].GetComponent<TileState>().occupied)
+        {
+            return true;
+        }
+        foreach(Vector3 attached in attachedWalls)
+        {
+            if (waveManager.GetComponent<WaveManager>().tileMap[xLoc + (int) attached.x, zLoc + (int)attached.z].GetComponent<TileState>().occupied)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool _CheckForValidPath()
+    {
+        List<Vector2> additions = new List<Vector2>
+        {
+            new Vector2(closestX, closestZ)
+        };
+        foreach (Vector3 attached in attachedWalls)
+        {
+            additions.Add(new Vector2(closestX + attached.x, closestZ + attached.z));
+        }
+        return waveManager.GetComponent<WaveManager>().TestValidPath(additions);
+    }
+    
+    public void _HighlightInvalid()
+    {
+        if (closest != null)
+        {
+            closest.GetComponent<TileState>().ChangeToRed();
+        }
+
+        foreach (Vector3 attached in attachedWalls)
+        {
+            if (closest != null)
+            {
+                GameObject attachedWall = waveManager.GetComponent<WaveManager>().tileMap[closestX + (int)attached.x, closestZ + (int)attached.z];
+                if (attachedWall != null)
+                {
+                    attachedWall.GetComponent<TileState>().ChangeToRed();
+                }
+
+            }
+        }
+    }
 }
