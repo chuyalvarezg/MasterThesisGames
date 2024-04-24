@@ -110,6 +110,31 @@ public class VRSelecting : MonoBehaviour
         }
     }
 
+    private void CustomHandleRaycast()
+    {
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 1000, connectingLayer))
+        {
+            currWall = hit.transform.gameObject;
+            Wall tmp = currWall.GetComponent<Wall>();
+            if (tmp != null)
+            {
+                tmp.ToggleActive(true);
+            }
+            else
+            {
+                currWall.GetComponent<Tower>().ToggleActive(true);
+            }
+
+
+            //Debug.Log("Selectable");
+
+        }
+        else
+        {
+            //Debug.Log("Not an enemy");
+        }
+    }
+
     IEnumerator ActivateCooldown()
     {
         cooldown = true;
