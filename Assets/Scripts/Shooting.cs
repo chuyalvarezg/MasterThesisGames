@@ -101,4 +101,14 @@ public class Shooting : MonoBehaviour
         currentMagazineCountText.text = currentMagazineCount.ToString();
     }
 
+    IEnumerator ReloadAllWeapon()
+        {
+            currentMagazineCount = 0;
+            currentMagazineCountText.text = "-";
+            reload.Play();
+            yield return new WaitForSeconds(2);
+            currentMagazineCount = maxMagazineCount;
+            currentMagazineCountText.text = currentMagazineCount.ToString();
+        }
+
 }

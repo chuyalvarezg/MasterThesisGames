@@ -130,6 +130,35 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+public void ShowNewPhase()
+    {
+        Debug.Log(DataManager.Instance.firstSceneLoaded);
+        if (DataManager.Instance.firstSceneLoaded == "")
+        {
+            int roll = Random.Range(0, 2);
+            
+            if (roll == 0)
+            {
+                DataManager.Instance.difficultyOrder = DataManager.Instance.difficultyOrder + "S";
+                DataManager.Instance.firstSceneLoaded = "GalleryShooter";
+                phase2A.SetActive(true);
+                shooterTrailer.SetActive(true);
+
+            }
+            else
+            {
+                DataManager.Instance.difficultyOrder = DataManager.Instance.difficultyOrder + "T";
+                DataManager.Instance.firstSceneLoaded = "TowerDefense";
+                phase2B.SetActive(true);
+                towerTrailer.SetActive(true);
+            }
+        }
+        else
+        {
+            
+        }
+    }
+
     public void ShowPhase3(string sceneName)
     {
         sceneToLoad = sceneName;

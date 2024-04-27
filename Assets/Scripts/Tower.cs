@@ -217,6 +217,37 @@ public class Tower : MonoBehaviour
         }
     }
 
+    IEnumerator FireBurst()
+    {
+        while (true) {
+            if (targets.Count > 0)
+            {
+                if (aoe)
+                {                 
+                    for (int i = 0; i < targets.Count; i++)
+                    {
+                        GameObject tmpTarget = targets[i];
+                        if (tmpTarget != null)
+                        {
+                            tmpTarget.GetComponent<Enemy>().TakeDamage(damage);
+                        }
+                    }
+                }
+                else
+                {
+                    targets[targets.Count - 1].GetComponent<Enemy>().TakeDamage(damage);
+                }
+                
+                
+            }
+            else
+            {
+                animator.SetBool("target", false);
+            }
+        yield return new WaitForSeconds(fireRate);
+        }
+    }
+
     IEnumerator StartSpellCooldown() {
         attacking = false;
         spell.SetActive(false);
